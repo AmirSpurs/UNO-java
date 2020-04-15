@@ -37,7 +37,7 @@ public class GameManagement {
                 manageWildDrawFourCard();
 
             else {
-                if (!players[turn].canPlaceAnyCard()) {
+                if (!players[turn].canPlaceAnyCard(deck.getCurrentCard())) {
                     players[turn].printAllCards();
                     System.out.println("Can't place any card!");
                     System.out.println("press any key to draw card from deck");
@@ -47,7 +47,7 @@ public class GameManagement {
 
                 }
             }
-            if (players[turn].canPlaceAnyCard()) {
+            if (players[turn].canPlaceAnyCard(deck.getCurrentCard())) {
                 String userInput;
 
                 do {
@@ -124,7 +124,7 @@ public class GameManagement {
         if (draw4Points>0 && !( playerToPlace.cardAt(cardIndex) instanceof WildDrawFourCard))
             return false;
 
-        if (cardIndex>playerToPlace.getCardsNumber() || playerToPlace.CanplayWithoutWildDraw(cardIndex)  ||
+        if (cardIndex>playerToPlace.getCardsNumber() || playerToPlace.CanplayWithoutWildDraw(cardIndex,deck.getCurrentCard())  ||
                 playerToPlace.cardAt(cardIndex).action(this,deck.getCurrentCard())  )
         {
             System.out.println("Invalid Input!");

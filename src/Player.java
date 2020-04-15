@@ -29,6 +29,7 @@ public class Player {
     public String getName() {
         return name;
     }
+
     public void printAllCards()
     {
 
@@ -51,14 +52,28 @@ public class Player {
         }
         return false ;
     }
-    public boolean canPlaceAnyCard()
+    public boolean canPlaceAnyCard(Card currentCard)
     {
-        return true;
+        for (Card card:cards)
+        {
+            if ( card.canPutOver(currentCard))
+                return true;
+        }
+        return false ;
     }
-    public boolean CanplayWithoutWildDraw(int cardIndex)
+    public boolean CanplayWithoutWildDraw(int index,Card currentCard)
     {
-        return true;
 
+        if (!(cards.get(index) instanceof WildDrawFourCard))
+        return true;
+        {
+            for (Card card: cards) {
+
+                if (!(card instanceof WildDrawFourCard) && card.canPutOver(currentCard))
+                    return false;
+            }
+        }
+        return true;
     }
 
 
