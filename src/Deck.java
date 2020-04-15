@@ -18,7 +18,7 @@ public class Deck {
     }
 
     public Deck() {
-        for (int color=0;color<4;color++)
+        for (int color=1;color<=4;color++)
         {
             cards.add(new NormalCard(color,0));
             cards.add(new WildDrawFourCard());
@@ -27,9 +27,9 @@ public class Deck {
             {
                 for (int number=1;number<10;number++)
                     cards.add(new NormalCard(color,number));
-                cards.add(new SkipCard(color));
-                cards.add(new ReverseCard(color));
-                cards.add(new DrawTwoCard(color));
+                cards.add(new SkipCard(color,20));
+                cards.add(new ReverseCard(color,20));
+                cards.add(new DrawTwoCard(color,20));
             }
         }
         Collections.shuffle(cards);

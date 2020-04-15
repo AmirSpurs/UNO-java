@@ -1,20 +1,14 @@
-public class NormalCard implements Card {
-    final private int color;
-    private int number;
+public class NormalCard extends Card {
 
 
-    public NormalCard(int color,int number) {
-        this.color = color;
-        this.number = number;
+    protected NormalCard(int color, int number) {
+        super(color, number);
     }
-
 
     @Override
     public boolean action(GameManagement manager, Player nextPLayer, Card currentCard, Deck deck) {
-        if (!currentCard.canPutOver(this))
+        if (!replaceCard(currentCard,deck))
             return false;
-        deck.addCard(currentCard);
-        deck.setCurrentCard(this);
         manager.setTurn(manager.nextPlayer());
             return true;
 
@@ -25,22 +19,11 @@ public class NormalCard implements Card {
 
     }
 
-    public int getNumber() {
-        return number;
-    }
-
-    @Override
-    public int getColor() {
-        return color;
-
-
-    }
 
 
     @Override
     public boolean canPutOver(Card cardToPutOver) {
-        if (color==)
-        return false;
+        return this.getColor() == cardToPutOver.getColor() || this.getNumber() == cardToPutOver.getNumber();
     }
 
 }
