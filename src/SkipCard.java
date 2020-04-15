@@ -5,11 +5,10 @@ public class SkipCard extends Card {
   }
 
   @Override
-  public boolean action(GameManagement manager, Player nextPLayer, Card currentCard, Deck deck)
+  public boolean action(GameManagement manager, Card currentCard)
   {
-      if (!replaceCard(currentCard,deck))
-        return false;
-      manager.setTurn(manager.nextPlayer());
+      if (!canPutOver(currentCard))
+          return false;
       manager.setTurn(manager.nextPlayer());
       return  true;
   }
@@ -20,8 +19,8 @@ public class SkipCard extends Card {
   }
 
   @Override
-  public boolean canPutOver(Card cardToPutOver) {
-    return  (this.getColor()==cardToPutOver.getColor() || cardToPutOver instanceof SkipCard ) ;
+  public boolean canPutOver(Card currentCard) {
+    return  (this.getColor()==currentCard.getColor() || currentCard instanceof SkipCard ) ;
 
   }
 

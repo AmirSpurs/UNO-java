@@ -13,14 +13,7 @@ public abstract class Card
         this.number = number;
     }
 
-    public boolean replaceCard (Card currentCard,Deck deck)
-    {
-        if (!currentCard.canPutOver(this))
-            return false;
-        deck.addCard(currentCard);
-        deck.setCurrentCard(this);
-        return true;
-    }
+
     public int getColor() {
         return color;
     }
@@ -29,12 +22,14 @@ public abstract class Card
         return number;
     }
 
+
     public void setNumber(int number) {
         this.number = number;
     }
 
-    public abstract boolean action (GameManagement manager, Player nextPLayer, Card currentCard, Deck deck);
+    public abstract boolean action (GameManagement manager, Card currentCard);
     public abstract void print();
 
-    public abstract boolean canPutOver(Card cardToPutOver);
+    public abstract boolean canPutOver(Card currentCard);
+
 }

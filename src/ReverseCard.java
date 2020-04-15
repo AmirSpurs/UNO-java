@@ -6,11 +6,10 @@ public class ReverseCard extends Card {
 
 
     @Override
-    public boolean action(GameManagement manager, Player nextPLayer, Card currentCard, Deck deck) {
-        if (!replaceCard(currentCard,deck))
+    public boolean action(GameManagement manager, Card currentCard) {
+        if (!canPutOver(currentCard))
             return false;
         manager.setDirection(-1*manager.getDirection());
-        manager.setTurn(manager.nextPlayer());
         return true;
     }
 
@@ -20,8 +19,8 @@ public class ReverseCard extends Card {
     }
 
     @Override
-    public boolean canPutOver(Card cardToPutOver) {
-        return  (this.getColor()==cardToPutOver.getColor() || cardToPutOver instanceof ReverseCard ) ;
+    public boolean canPutOver(Card currentCard) {
+        return  (this.getColor()==currentCard.getColor() || currentCard instanceof ReverseCard ) ;
 
     }
 }

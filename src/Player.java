@@ -9,6 +9,19 @@ public class Player {
         this.name = name;
         cards = new ArrayList<Card>();
     }
+
+    public Card cardAt (int index)
+    {
+        return cards.get(index);
+    }
+//    public ArrayList<Card> getCards() {
+//        return cards;
+//    }
+
+    public void removeCardAt (int index)
+    {
+        cards.remove(index);
+    }
     public int getCardsNumber()
     {
         return cards.size();
@@ -22,13 +35,12 @@ public class Player {
     }
     public boolean canPlaceAnyCard()
     {
-
-    }
-    public boolean placeCard(int cardIndex,Player nextPlayer,Card deckCard,GameManagement manager,Deck deck)
-    {
-        //here we'll write the code to handle super fucking card blah blah
-        cards.get(cardIndex).action(manager,nextPlayer,deckCard,deck);
         return true;
+    }
+    public boolean CanplayWithoutWildDraw(int cardIndex)
+    {
+        return true;
+
     }
 
 

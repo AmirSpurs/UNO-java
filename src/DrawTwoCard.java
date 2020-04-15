@@ -5,12 +5,11 @@ public class DrawTwoCard extends Card{
     }
 
     @Override
-    public boolean action(GameManagement manager, Player nextPLayer, Card currentCard, Deck deck) {
-        if (!replaceCard(currentCard,deck))
+    public boolean action(GameManagement manager, Card currentCard) {
+        if (!canPutOver(currentCard))
             return false;
-        manager.setDrawPoint(manager.getDrawPoint()+2);
-        manager.setTurn(manager.nextPlayer());
-
+        manager.setDraw2Points(manager.getDraw2Points() + 2);
+        return true;
     }
 
     @Override
@@ -19,9 +18,9 @@ public class DrawTwoCard extends Card{
     }
 
     @Override
-    public boolean canPutOver(Card cardToPutOver) {
+    public boolean canPutOver(Card currentCard) {
 
-        return false;
+        return  (this.getColor()==currentCard.getColor() || currentCard instanceof DrawTwoCard ) ;
     }
 }
 

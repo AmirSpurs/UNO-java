@@ -6,11 +6,8 @@ public class NormalCard extends Card {
     }
 
     @Override
-    public boolean action(GameManagement manager, Player nextPLayer, Card currentCard, Deck deck) {
-        if (!replaceCard(currentCard,deck))
-            return false;
-        manager.setTurn(manager.nextPlayer());
-            return true;
+    public boolean action(GameManagement manager,  Card currentCard) {
+        return canPutOver(currentCard);
 
     }
 
@@ -22,8 +19,8 @@ public class NormalCard extends Card {
 
 
     @Override
-    public boolean canPutOver(Card cardToPutOver) {
-        return this.getColor() == cardToPutOver.getColor() || this.getNumber() == cardToPutOver.getNumber();
+    public boolean canPutOver(Card currentCard) {
+        return this.getColor() == currentCard.getColor() || this.getNumber() == currentCard.getNumber();
     }
 
 }

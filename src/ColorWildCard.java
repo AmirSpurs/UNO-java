@@ -8,11 +8,10 @@ public class ColorWildCard extends Card{
     }
 
     @Override
-    public boolean action(GameManagement manager, Player nextPLayer, Card currentCard, Deck deck)
+    public boolean action(GameManagement manager, Card currentCard)
     {
-        if (!replaceCard(currentCard,deck))
+        if (!canPutOver(currentCard))
             return false;
-        manager.setTurn(manager.nextPlayer());
         askAndSetColor();
         return true;
     }
@@ -43,8 +42,8 @@ public class ColorWildCard extends Card{
     }
 
     @Override
-    public boolean canPutOver(Card cardToPutOver) {
-        return  (this.getColor()==cardToPutOver.getColor() || cardToPutOver instanceof ColorWildCard ) ;
+    public boolean canPutOver(Card currentCard) {
+        return  true ;
 
     }
 

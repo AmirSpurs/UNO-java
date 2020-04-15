@@ -21,8 +21,8 @@ public class Deck {
         for (int color=1;color<=4;color++)
         {
             cards.add(new NormalCard(color,0));
-            cards.add(new WildDrawFourCard());
-            cards.add(new ColorWildCard());
+            cards.add(new WildDrawFourCard(0,50));
+            cards.add(new ColorWildCard(0,50));
             for (int i=1;i<=2;i++)
             {
                 for (int number=1;number<10;number++)
