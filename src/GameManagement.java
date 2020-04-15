@@ -27,32 +27,87 @@ public class GameManagement {
     }
     public void playGame() throws IOException {
         Scanner input = new Scanner(System.in);
-        while (!endGame())
-        {
-            deck.getCurrentCard().print();
-            if (!players[turn].canPlaceAnyCard())
-            {
-                players[turn].printAllCards();
-                System.out.println(players[turn].getName() + "'s Turn");
-                System.out.println("Can't place any card!");
-                System.out.println("press any key to draw card from deck");
-                System.in.read();
-                deck.giveAwayCard(players[turn]);
-                players[turn].printAllCards();
+        while (!endGame()) {
+            System.out.println(players[turn].getName() + "'s Turn");
 
+            deck.getCurrentCard().print();
+            if (draw2Points > 0)
+                manageDrawTwoCards();
+            else if (draw4Points > 0)
+                manageWildDrawFourCard();
+
+            else {
+                if (!players[turn].canPlaceAnyCard()) {
+                    players[turn].printAllCards();
+                    System.out.println("Can't place any card!");
+                    System.out.println("press any key to draw card from deck");
+                    System.in.read();
+                    deck.giveAwayCard(players[turn]);
+                    players[turn].printAllCards();
+
+                }
             }
-            if (players[turn].canPlaceAnyCard())
-            {
+            if (players[turn].canPlaceAnyCard()) {
                 String userInput;
+
                 do {
-                    System.out.println(players[turn].getName() + "'s Turn");
                     System.out.println("choose one of your cards");
                     players[turn].printAllCards();
                     userInput = input.next();
-                } while (!placeCard(players[turn],userInput));
+                } while (!placeCard(players[turn], userInput));
+            }
+        }
+            turn = nextPlayer();
+
+        }
+
+
+    public void manageDrawTwoCards() throws IOException {
+        if (players[turn].hasDrawTwo())
+        {
+            Scanner input = new Scanner(System.in);
+            String userInput;
+            System.out.println("You Can choose one of your draw cards Any other Key to pick up "+draw2Points+" Cards");
+            players[turn].printAllCards();
+            userInput = input.next();
+            if (!placeCard(players[turn],userInput))
+            {
+                penalty(draw2Points);
+                draw2Points = 0;
             }
 
         }
+        else {
+            penalty(draw2Points);
+            draw2Points = 0;
+        }
+    }
+    public void manageWildDrawFourCard() throws IOException {
+        if (players[turn].hasWildDrewFour())
+        {
+            Scanner input = new Scanner(System.in);
+            String userInput;
+            System.out.println("You Can choose one of your draw cards Any other Key to pick up "+draw4Points+" Cards");
+            players[turn].printAllCards();
+            userInput = input.next();
+            if (!placeCard(players[turn],userInput))
+            {
+                penalty(draw4Points);
+                draw4Points = 0;
+            }
+
+        }
+        else {
+            penalty(draw4Points);
+            draw4Points = 0;
+        }
+
+    }
+    public void penalty (int drawPoints) throws IOException {
+        System.out.println("You should pick up "+drawPoints+" cards\nPress Any Key To Continue");
+        System.in.read();
+        for (int i=1;i<=drawPoints;i++)
+            deck.giveAwayCard(players[turn]);
     }
     public boolean placeCard(Player playerToPlace,String userInput)
     {
@@ -64,6 +119,11 @@ public class GameManagement {
             return false;
         }
         cardIndex--;
+        if ( draw2Points>0 && !( playerToPlace.cardAt(cardIndex) instanceof DrawTwoCard))
+            return false;
+        if (draw4Points>0 && !( playerToPlace.cardAt(cardIndex) instanceof WildDrawFourCard))
+            return false;
+
         if (cardIndex>playerToPlace.getCardsNumber() || playerToPlace.CanplayWithoutWildDraw(cardIndex)  ||
                 playerToPlace.cardAt(cardIndex).action(this,deck.getCurrentCard())  )
         {
@@ -73,8 +133,6 @@ public class GameManagement {
         deck.addCard(deck.getCurrentCard());
         deck.setCurrentCard(playerToPlace.cardAt(cardIndex));
         playerToPlace.removeCardAt(cardIndex);
-        turn = nextPlayer();
-
         return true;
     }
     public int nextPlayer()

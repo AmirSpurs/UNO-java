@@ -38,7 +38,7 @@ public class Deck {
 
         do {
             index = topCard.nextInt(108);
-        } while ( cards.get(index) instanceof WildCard); //recheck for sure
+        } while ( cards.get(index) instanceof WildDrawFourCard || cards.get(index) instanceof ColorWildCard); //recheck for sure
         currentCard = cards.get(index);
         cards.remove(index);
         

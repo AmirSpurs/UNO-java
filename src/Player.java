@@ -33,6 +33,24 @@ public class Player {
     {
 
     }
+    public boolean hasWildDrewFour()
+    {
+        for (Card card:cards)
+        {
+            if ( card instanceof WildDrawFourCard)
+                return true;
+        }
+        return false ;
+    }
+    public boolean hasDrawTwo()
+    {
+        for (Card card:cards)
+        {
+            if ( card instanceof DrawTwoCard)
+                return true;
+        }
+        return false ;
+    }
     public boolean canPlaceAnyCard()
     {
         return true;
