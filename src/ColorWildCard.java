@@ -12,18 +12,20 @@ public class ColorWildCard extends Card{
     {
         if (!replaceCard(currentCard,deck))
             return false;
-
-
+        manager.setTurn(manager.nextPlayer());
+        askAndSetColor();
+        return true;
     }
 
-    public void askColor()
+    public void askAndSetColor()
     {
         Scanner input = new Scanner(System.in);
+        int colorNo ;
+
         while (true)
         {
             System.out.println("choose one of color\n1Red\n2)Green\n3)Yellow\n4)Blue");
             String userInput = input.next();
-            int colorNo;
             try {
                 colorNo = Integer.parseInt(userInput);
                 break;
@@ -33,6 +35,7 @@ public class ColorWildCard extends Card{
                 System.out.println("Invalid Input!");
             }
         }
+        this.setColor(colorNo);
     }
     @Override
     public void print() {

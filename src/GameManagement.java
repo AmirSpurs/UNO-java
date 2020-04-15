@@ -62,7 +62,7 @@ public class GameManagement {
             return false;
         }
         cardIndex--;
-        if (cardIndex>playerToPlace.getCardsNumber() ||playerToPlace.placeCard(cardIndex,players[nextPlayer()],deck.getCurrentCard(),this,deck) ) {
+        if (cardIndex>playerToPlace.getCardsNumber() || playerToPlace.placeCard(cardIndex,players[nextPlayer()],deck.getCurrentCard(),this,deck) ) {
             System.out.println("Invalid Input!");
             return false;
         }
