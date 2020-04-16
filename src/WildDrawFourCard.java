@@ -9,7 +9,7 @@ public class WildDrawFourCard extends ColorWildCard {
     {
         if (!canPutOver(currentCard))
             return false;
-        askAndSetColor();
+        askAndSetColor(manager);
         manager.setDraw4Points(manager.getDraw4Points() + 4);
 
         return true;

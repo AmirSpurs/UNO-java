@@ -19,38 +19,34 @@ public class GameManagement {
     }
 
 
-    public void startGame()
-    {
+    public void startGame() throws InterruptedException {
         for (Player player:players)
             deck.handOutCard(player);
         deck.getCurrentCard().action(this,deck.getCurrentCard());
     }
-    public void playGame() throws IOException {
+    public void playGame() throws IOException, InterruptedException {
         startGame();
         Scanner input = new Scanner(System.in);
         while (!endGame()) {
 
-            deck.printCurrentCard();
-
-            System.out.println(players[turn].getName() + "'s Turn");
+            showGameInfo();
 
             if (draw2Points > 0)
                 manageDrawTwoCards();
             else if (draw4Points > 0)
             {
-                System.out.println(12);
+                //System.out.println(12);
                 manageWildDrawFourCard();
 
             }
 
             else {
                 if (!players[turn].canPlaceAnyCard(deck.getCurrentCard())) {
-                    players[turn].printAllCards();
                     System.out.println("Can't place any card!");
                     System.out.println("press any key to draw card from deck");
                     System.in.read();
+                    Thread.sleep(700);
                     deck.giveAwayCard(players[turn]);
-                    players[turn].printAllCards();
 
                 }
 
@@ -58,8 +54,8 @@ public class GameManagement {
                     String userInput;
 
                     do {
+                        showGameInfo();
                         System.out.println("choose one of your cards");
-                        players[turn].printAllCards();
                         userInput = input.next();
                     } while (!placeCard(players[turn], userInput));
                 }
@@ -70,14 +66,12 @@ public class GameManagement {
         }
 
 
-    public void manageDrawTwoCards() throws IOException {
-        players[turn] .printAllCards();
+    public void manageDrawTwoCards() throws IOException, InterruptedException {
         if (players[turn].hasDrawTwo())
         {
             Scanner input = new Scanner(System.in);
             String userInput;
             System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw2Points+" Cards");
-            players[turn].printAllCards();
             userInput = input.next();
             if (!placeCard(players[turn],userInput))
             {
@@ -91,15 +85,13 @@ public class GameManagement {
             draw2Points = 0;
         }
     }
-    public void manageWildDrawFourCard() throws IOException {
-        players[turn] .printAllCards();
+    public void manageWildDrawFourCard() throws IOException, InterruptedException {
 
         if (players[turn].hasWildDrewFour())
         {
             Scanner input = new Scanner(System.in);
             String userInput;
             System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw4Points+" Cards");
-            players[turn].printAllCards();
             userInput = input.next();
             if (!placeCard(players[turn],userInput))
             {
@@ -114,19 +106,22 @@ public class GameManagement {
         }
 
     }
-    public void penalty (int drawPoints) throws IOException {
+    public void penalty (int drawPoints) throws IOException, InterruptedException {
         System.out.println("You should pick up "+drawPoints+" cards\nPress Any Key To Continue");
         System.in.read();
         for (int i=1;i<=drawPoints;i++)
             deck.giveAwayCard(players[turn]);
+        showGameInfo();
+        Thread.sleep(600);
     }
-    public boolean placeCard(Player playerToPlace,String userInput)
-    {
+    public boolean placeCard(Player playerToPlace,String userInput) throws InterruptedException {
         int cardIndex ;
         try {
             cardIndex = Integer.parseInt(userInput);
         } catch (NumberFormatException e) {
             System.out.println("Invalid Input!");
+            Thread.sleep(500);
+
             return false;
         }
         cardIndex--;
@@ -139,11 +134,14 @@ public class GameManagement {
                 !(playerToPlace.cardAt(cardIndex).action(this,deck.getCurrentCard()))  )
         {
             System.out.println("Invalid Input!");
+            Thread.sleep(500);
+
             return false;
         }
         deck.addCard(deck.getCurrentCard());
         deck.setCurrentCard(playerToPlace.cardAt(cardIndex));
         playerToPlace.removeCardAt(cardIndex);
+        Thread.sleep(300);
         return true;
     }
     public int nextPlayer()
@@ -153,7 +151,20 @@ public class GameManagement {
         return ((turn+direction) % players.length);
     }
 
+    public void showGameInfo()
+    {
+        System.out.print("\033[H\033[2J");
+        for (Player player: players)
+            System.out.println(player.getName()+" : "+player.getCardsNumber()+" cards");
+        if (direction==-1)
+            System.out.println("Anti clockWise");
+        else
+            System.out.println("ClockWise");
+        deck.printCurrentCard();
+        System.out.println(players[turn].getName() + "'s Turn\n");
+        players[turn].printAllCards();
 
+    }
     public boolean endGame(){return false;}
     public int getDirection() {
         return direction;

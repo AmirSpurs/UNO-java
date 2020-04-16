@@ -12,7 +12,7 @@ public class ColorWildCard extends Card{
     {
         if (!canPutOver(currentCard))
             return false;
-        askAndSetColor();
+        askAndSetColor(manager);
         return true;
     }
 
@@ -23,22 +23,24 @@ public class ColorWildCard extends Card{
 
     }
 
-    public void askAndSetColor()
-    { 
+    public void askAndSetColor(GameManagement manager)
+    {
         Scanner input = new Scanner(System.in);
         int colorNo ;
 
         while (true)
         {
-            System.out.println("choose one of color\n1Red\n2)Green\n3)Yellow\n4)Blue");
+            System.out.println("choose one of color\n1)Red\n2)Green\n3)Yellow\n4)Blue");
             String userInput = input.next();
             try {
                 colorNo = Integer.parseInt(userInput);
-                break;
+               if (colorNo>0 && colorNo<5)
+                   break;
             }
             catch (NumberFormatException e)
             {
                 System.out.println("Invalid Input!");
+                manager.showGameInfo();
             }
         }
         this.setColor(colorNo);

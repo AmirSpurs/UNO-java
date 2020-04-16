@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Run {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         Deck deck = new Deck();
         Player player1 = new Player("ali");
@@ -14,11 +14,11 @@ public class Run {
         players[2] = player3;
 
         GameManagement man = new GameManagement(players,deck);
-        //man.playGame();
-        NormalCard norm = new NormalCard(1,0);
-        for (int i=1;i<=20;i++)
-        player1.addCard(norm);
-        player1.printAllCards();
+        man.playGame();
+//        NormalCard norm = new NormalCard(1,0);
+//        for (int i=1;i<=20;i++)
+//        player1.addCard(norm);
+//        player1.printAllCards();
 
 
 
