@@ -28,8 +28,17 @@ public abstract class Card
     }
 
     public abstract boolean action (GameManagement manager, Card currentCard);
-    public abstract void print();
+    public  void print(int index)
+    {
+        if (index!=5)
+            System.out.print("\u001B[4"+color+"m" +"               ");
+        else
+            specificPrint();
+        System.out.print("\u001B[0m     ");
 
+
+    }
+    public abstract void specificPrint();
     public abstract boolean canPutOver(Card currentCard);
 
 }

@@ -15,7 +15,7 @@ public class GameManagement {
         direction = 1 ;
         draw4Points = 0;
         draw2Points = 0;
-        turn = 1;
+        turn = 0;
     }
 
 
@@ -26,15 +26,22 @@ public class GameManagement {
         deck.getCurrentCard().action(this,deck.getCurrentCard());
     }
     public void playGame() throws IOException {
+        startGame();
         Scanner input = new Scanner(System.in);
         while (!endGame()) {
+
+            deck.printCurrentCard();
+
             System.out.println(players[turn].getName() + "'s Turn");
 
-            deck.getCurrentCard().print();
             if (draw2Points > 0)
                 manageDrawTwoCards();
             else if (draw4Points > 0)
+            {
+                System.out.println(12);
                 manageWildDrawFourCard();
+
+            }
 
             else {
                 if (!players[turn].canPlaceAnyCard(deck.getCurrentCard())) {
@@ -46,18 +53,19 @@ public class GameManagement {
                     players[turn].printAllCards();
 
                 }
-            }
-            if (players[turn].canPlaceAnyCard(deck.getCurrentCard())) {
-                String userInput;
 
-                do {
-                    System.out.println("choose one of your cards");
-                    players[turn].printAllCards();
-                    userInput = input.next();
-                } while (!placeCard(players[turn], userInput));
+                if (players[turn].canPlaceAnyCard(deck.getCurrentCard())) {
+                    String userInput;
+
+                    do {
+                        System.out.println("choose one of your cards");
+                        players[turn].printAllCards();
+                        userInput = input.next();
+                    } while (!placeCard(players[turn], userInput));
+                }
             }
-        }
             turn = nextPlayer();
+        }
 
         }
 
@@ -67,7 +75,7 @@ public class GameManagement {
         {
             Scanner input = new Scanner(System.in);
             String userInput;
-            System.out.println("You Can choose one of your draw cards Any other Key to pick up "+draw2Points+" Cards");
+            System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw2Points+" Cards");
             players[turn].printAllCards();
             userInput = input.next();
             if (!placeCard(players[turn],userInput))
@@ -87,7 +95,7 @@ public class GameManagement {
         {
             Scanner input = new Scanner(System.in);
             String userInput;
-            System.out.println("You Can choose one of your draw cards Any other Key to pick up "+draw4Points+" Cards");
+            System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw4Points+" Cards");
             players[turn].printAllCards();
             userInput = input.next();
             if (!placeCard(players[turn],userInput))
@@ -124,8 +132,13 @@ public class GameManagement {
         if (draw4Points>0 && !( playerToPlace.cardAt(cardIndex) instanceof WildDrawFourCard))
             return false;
 
-        if (cardIndex>playerToPlace.getCardsNumber() || playerToPlace.CanplayWithoutWildDraw(cardIndex,deck.getCurrentCard())  ||
-                playerToPlace.cardAt(cardIndex).action(this,deck.getCurrentCard())  )
+        if (playerToPlace.cardAt(cardIndex) instanceof WildDrawFourCard && playerToPlace.canPlayWithoutWildDraw(deck.getCurrentCard()))
+        {
+            System.out.println(222222);
+            System.out.println("Invalid Input!");
+            return false;
+        }
+        if (cardIndex >= playerToPlace.getCardsNumber()  || !(playerToPlace.cardAt(cardIndex).action(this,deck.getCurrentCard()))  )
         {
             System.out.println("Invalid Input!");
             return false;
@@ -137,7 +150,9 @@ public class GameManagement {
     }
     public int nextPlayer()
     {
-        return ((turn+direction)%players.length);
+        if (turn+direction<0)
+            turn = players.length;
+        return ((turn+direction) % players.length);
     }
 
 

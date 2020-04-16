@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class ColorWildCard extends Card{
 
 
-    protected ColorWildCard(int color, int number) {
+    public ColorWildCard(int color, int number) {
         super(color, number);
     }
 
@@ -16,8 +16,15 @@ public class ColorWildCard extends Card{
         return true;
     }
 
+    @Override
+    public void specificPrint() {
+        System.out.print("\u001B[4"+getColor()+"m"+"\u001B[97m" +"   ColorWild   ");
+
+
+    }
+
     public void askAndSetColor()
-    {
+    { 
         Scanner input = new Scanner(System.in);
         int colorNo ;
 
@@ -36,10 +43,7 @@ public class ColorWildCard extends Card{
         }
         this.setColor(colorNo);
     }
-    @Override
-    public void print() {
 
-    }
 
     @Override
     public boolean canPutOver(Card currentCard) {

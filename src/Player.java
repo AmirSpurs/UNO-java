@@ -32,7 +32,11 @@ public class Player {
 
     public void printAllCards()
     {
-
+        for (int i = 1;i<=9;i++) {
+            for (Card card : cards)
+                card.print(i);
+            System.out.println("\u001B[0m     ");
+        }
     }
     public boolean hasWildDrewFour()
     {
@@ -61,24 +65,23 @@ public class Player {
         }
         return false ;
     }
-    public boolean CanplayWithoutWildDraw(int index,Card currentCard)
+    public boolean canPlayWithoutWildDraw(Card currentCard)
     {
 
-        if (!(cards.get(index) instanceof WildDrawFourCard))
-        return true;
-        {
             for (Card card: cards) {
 
-                if (!(card instanceof WildDrawFourCard) && card.canPutOver(currentCard))
-                    return false;
+                if (  !(card instanceof WildDrawFourCard) && (card.canPutOver(currentCard)))
+                    return true;
             }
-        }
-        return true;
+
+        return false;
     }
 
 
     public void addCard (Card cardToAdd)
     {
+        if (cardToAdd instanceof ColorWildCard || cardToAdd instanceof WildDrawFourCard)
+            cardToAdd.setColor(0);
         cards.add(cardToAdd);
     }
 }

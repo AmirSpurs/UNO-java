@@ -14,9 +14,11 @@ public class ReverseCard extends Card {
     }
 
     @Override
-    public void print() {
+    public void specificPrint() {
+        System.out.print("\u001B[4"+getColor()+"m"+"\u001B[97m" +"    Reverse    ");
 
     }
+
 
     @Override
     public boolean canPutOver(Card currentCard) {

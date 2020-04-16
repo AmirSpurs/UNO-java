@@ -13,12 +13,14 @@ public class SkipCard extends Card {
       return  true;
   }
 
-  @Override
-  public void print() {
+    @Override
+    public void specificPrint() {
+        System.out.print("\u001B[4"+getColor()+"m"+"\u001B[97m" +"      Skip     ");
 
-  }
+    }
 
-  @Override
+
+    @Override
   public boolean canPutOver(Card currentCard) {
     return  (this.getColor()==currentCard.getColor() || currentCard instanceof SkipCard ) ;
 

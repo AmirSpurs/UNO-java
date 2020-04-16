@@ -13,9 +13,11 @@ public class DrawTwoCard extends Card{
     }
 
     @Override
-    public void print() {
+    public void specificPrint() {
+        System.out.print("\u001B[4"+getColor()+"m"+"\u001B[97m" +"     Drew2     ");
 
     }
+
 
     @Override
     public boolean canPutOver(Card currentCard) {

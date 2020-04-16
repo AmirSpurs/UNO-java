@@ -18,8 +18,10 @@ public class Deck {
     }
 
     public Deck() {
+        cards = new ArrayList<Card>();
         for (int color=1;color<=4;color++)
         {
+
             cards.add(new NormalCard(color,0));
             cards.add(new WildDrawFourCard(0,50));
             cards.add(new ColorWildCard(0,50));
@@ -41,7 +43,7 @@ public class Deck {
         } while ( cards.get(index) instanceof WildDrawFourCard || cards.get(index) instanceof ColorWildCard); //recheck for sure
         currentCard = cards.get(index);
         cards.remove(index);
-        
+
     }
     public void giveAwayCard(Player playerToGive)
     {
@@ -57,10 +59,26 @@ public class Deck {
         int i = 1;
         while (itr.hasNext())
         {
+            itr.next();
             if (i<=7)
                 itr.remove();
+
             i++;
         }
+    }
+    public void printCurrentCard()
+    {
+
+
+        for (int i = 1;i<=9;i++) {
+            System.out.print("                                           ");
+
+            currentCard.print(i);
+            System.out.println("\u001B[0m     ");
+        }
+
+            System.out.println("\u001B[0m     \n");
+
     }
 
 }

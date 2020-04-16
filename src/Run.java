@@ -1,2 +1,25 @@
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class Run {
+    public static void main(String[] args) throws IOException {
+
+        Deck deck = new Deck();
+        Player player1 = new Player("ali");
+        Player player2 = new Player("amir");
+        Player player3 = new Player("mammad");
+        Player [] players = new Player[3];
+        players[0] = player1;
+        players[1] = player2;
+        players[2] = player3;
+
+        GameManagement man = new GameManagement(players,deck);
+        man.playGame();
+
+
+
+
+
+
+    }
 }
