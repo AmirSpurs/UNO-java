@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.concurrent.LinkedBlockingDeque;
 
 public class Deck {
     private ArrayList<Card> cards;
@@ -47,8 +48,10 @@ public class Deck {
     }
     public void giveAwayCard(Player playerToGive)
     {
-        playerToGive.addCard(cards.get(0));
-        cards.remove(0);
+        Random randCard = new Random();
+        int index = randCard.nextInt(cards.size());
+        playerToGive.addCard(cards.get(index));
+        cards.remove(index);
     }
     public void handOutCard (Player playerToGive)
     {

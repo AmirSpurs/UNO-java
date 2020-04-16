@@ -34,7 +34,12 @@ public class Player {
     {
         int cardI = 0 ;
 
-        for (int j=1;j<= (cards.size() / 10)+1;j++)
+        int limit;
+        if (cards.size() % 10 ==0)
+            limit = cards.size()/10;
+        else
+            limit = cards.size()/10 + 1;
+        for (int j=1;j<= limit;j++)
         {
             for (int i = 1; i <= 9; i++)
             {
