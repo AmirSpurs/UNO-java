@@ -71,6 +71,7 @@ public class GameManagement {
 
 
     public void manageDrawTwoCards() throws IOException {
+        players[turn] .printAllCards();
         if (players[turn].hasDrawTwo())
         {
             Scanner input = new Scanner(System.in);
@@ -91,6 +92,8 @@ public class GameManagement {
         }
     }
     public void manageWildDrawFourCard() throws IOException {
+        players[turn] .printAllCards();
+
         if (players[turn].hasWildDrewFour())
         {
             Scanner input = new Scanner(System.in);
@@ -132,13 +135,8 @@ public class GameManagement {
         if (draw4Points>0 && !( playerToPlace.cardAt(cardIndex) instanceof WildDrawFourCard))
             return false;
 
-        if (playerToPlace.cardAt(cardIndex) instanceof WildDrawFourCard && playerToPlace.canPlayWithoutWildDraw(deck.getCurrentCard()))
-        {
-            System.out.println(222222);
-            System.out.println("Invalid Input!");
-            return false;
-        }
-        if (cardIndex >= playerToPlace.getCardsNumber()  || !(playerToPlace.cardAt(cardIndex).action(this,deck.getCurrentCard()))  )
+        if (cardIndex>playerToPlace.getCardsNumber() || (playerToPlace.CanplayWithoutWildDraw(cardIndex,deck.getCurrentCard()))  ||
+                !(playerToPlace.cardAt(cardIndex).action(this,deck.getCurrentCard()))  )
         {
             System.out.println("Invalid Input!");
             return false;

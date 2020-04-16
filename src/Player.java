@@ -32,10 +32,39 @@ public class Player {
 
     public void printAllCards()
     {
-        for (int i = 1;i<=9;i++) {
-            for (Card card : cards)
-                card.print(i);
-            System.out.println("\u001B[0m     ");
+        int cardI = 0 ;
+
+        for (int j=1;j<= (cards.size() / 10)+1;j++)
+        {
+            for (int i = 1; i <= 9; i++)
+            {
+                 cardI= (j-1)*10;
+                while (cardI< cards.size() && cardI< j*10 ) {
+
+                    cards.get(cardI).print(i);
+                    cardI++;
+                }
+
+                System.out.println("\u001B[0m     ");
+            }
+            cardI= (j-1)*10;
+            while (cardI< cards.size() && cardI< j*10 )
+            {
+                if (j==1) {
+                    System.out.print("      (" + (cardI + 1) + ")      ");
+                    System.out.print("     ");
+                }
+                else
+                {
+                    System.out.print("      (" + (cardI + 1) + ")     ");
+                    System.out.print("     ");
+                }
+
+                cardI++;
+            }
+
+            System.out.println("\u001B[0m     \n");
+
         }
     }
     public boolean hasWildDrewFour()
@@ -65,17 +94,21 @@ public class Player {
         }
         return false ;
     }
-    public boolean canPlayWithoutWildDraw(Card currentCard)
+    public boolean CanplayWithoutWildDraw(int index,Card currentCard)
     {
 
+        if (!(cards.get(index) instanceof WildDrawFourCard))
+            return false;
+        {
             for (Card card: cards) {
 
-                if (  !(card instanceof WildDrawFourCard) && (card.canPutOver(currentCard)))
+                if (!(card instanceof WildDrawFourCard) && card.canPutOver(currentCard))
                     return true;
             }
-
+        }
         return false;
     }
+
 
 
     public void addCard (Card cardToAdd)

@@ -14,7 +14,11 @@ public class Run {
         players[2] = player3;
 
         GameManagement man = new GameManagement(players,deck);
-        man.playGame();
+        //man.playGame();
+        NormalCard norm = new NormalCard(1,0);
+        for (int i=1;i<=20;i++)
+        player1.addCard(norm);
+        player1.printAllCards();
 
 
 
