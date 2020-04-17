@@ -6,10 +6,12 @@ public class ReverseCard extends Card {
 
 
     @Override
-    public boolean action(GameManagement manager) {
+    public boolean action(GameManagement manager) throws InterruptedException {
         if (!canPutOver(manager.getCurrentCard()))
             return false;
         manager.setDirection(-1*manager.getDirection());
+        System.out.println("Direction Reversed!");
+        Thread.sleep(700);
         return true;
     }
 

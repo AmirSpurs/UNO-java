@@ -27,7 +27,7 @@ public abstract class Card
         this.number = number;
     }
 
-    public abstract boolean action (GameManagement manager);
+    public abstract boolean action (GameManagement manager) throws InterruptedException;
     public  void print(int index)
     {
         if (index!=5)

@@ -5,11 +5,12 @@ public class SkipCard extends Card {
   }
 
   @Override
-  public boolean action(GameManagement manager)  {
+  public boolean action(GameManagement manager) throws InterruptedException {
       if (!canPutOver(manager.getCurrentCard()))
           return false;
       manager.nextPlayer();
       System.out.println("Next player misses a turn!");
+      Thread.sleep(700);
       return  true;
   }
 

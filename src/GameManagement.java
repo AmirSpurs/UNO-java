@@ -35,48 +35,45 @@ public class GameManagement {
             nextPlayer();
             showGameInfo();
 
-            if (draw2Points > 0) {
+            if (draw2Points > 0)
                 manageDrawTwoCards();
-            }
             else if (draw4Points > 0)
-            {
                 manageWildDrawFourCard();
 
-            }
-//            if (endGame())
-//                break;
 
             else {
                 if (!currentPlayer.canPlaceAnyCard(currentCard)) {
                     System.out.println("Can't place any card!");
-                    System.out.println("press any key to draw card from deck");
                     if (currentPlayer instanceof Computer)
-                        Thread.sleep(700);
+                        Thread.sleep(100);
                     else
-                     System.in.read();
-                    Thread.sleep(700);
+                    {
+                        System.out.println("press any key to draw card from deck");
+                        System.in.read();
+                    }
+                    Thread.sleep(1000);
                     deck.giveAwayCard(currentPlayer);
+                    Thread.sleep(1000);
                 }
-//                if (endGame())
-//                    break;
                 if (currentPlayer.canPlaceAnyCard(currentCard)) {
                     String userInput;
 
                     do {
                         showGameInfo();
                         //here we should create method
-                        System.out.println("choose one of your cards");
+                        System.out.println(currentPlayer.getName()+" choose one of your cards");
                         if (currentPlayer instanceof Computer) {
                             userInput = ((Computer) currentPlayer).chooseCard(this);
-                            Thread.sleep(1300);
+                            Thread.sleep(1000);
                         }
                         else
-                        userInput = input.next();
-                    } while (( !endGame()) && !placeCard(currentPlayer, userInput));
-//                    if (endGame())
-//                        break;
+                            userInput = input.next();
+
+                        } while (( !endGame()) && !placeCard(currentPlayer, userInput));
+
                 }
             }
+            showGameInfo();
 
         }
 
@@ -91,7 +88,7 @@ public class GameManagement {
             System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw2Points+" Cards");
             if (currentPlayer instanceof Computer) {
                 userInput = ((Computer) currentPlayer).chooseDrawCard(false);
-                Thread.sleep(1300);
+                Thread.sleep(1600);
             }
             else
                 userInput = input.next();
@@ -116,7 +113,7 @@ public class GameManagement {
             System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw4Points+" Cards");
             if (currentPlayer instanceof Computer) {
                 userInput = ((Computer) currentPlayer).chooseDrawCard(true);
-                Thread.sleep(1300);
+                Thread.sleep(1700);
             }
             else
              userInput = input.next();
@@ -134,11 +131,15 @@ public class GameManagement {
 
     }
     public void penalty (int drawPoints) throws IOException, InterruptedException {
-        System.out.println("You should pick up "+drawPoints+" cards\nPress Any Key To Continue");
+        System.out.println(currentPlayer.getName()+" should pick up "+drawPoints+" cards!)");
         if (currentPlayer instanceof Computer)
-            Thread.sleep(700);
+            Thread.sleep(1400);
         else
+        {
+            System.out.println("Press Any Key To Continue");
             System.in.read();
+
+        }
         for (int i=1;i<=drawPoints;i++)
             deck.giveAwayCard(currentPlayer);
         showGameInfo();
@@ -170,7 +171,8 @@ public class GameManagement {
         deck.addCard(currentCard);
         currentCard = ( playerToPlace.cardAt(cardIndex));
         playerToPlace.removeCardAt(cardIndex);
-        Thread.sleep(300);
+        showGameInfo();
+        Thread.sleep(1000);
         return true;
     }
     public void nextPlayer()
@@ -192,6 +194,7 @@ public class GameManagement {
             System.out.println("ClockWise");
         printCurrentCard();
         System.out.println(currentPlayer.getName() + "'s Turn\n");
+        if (!(currentPlayer instanceof Computer))
         currentPlayer.printAllCards();
 
     }
