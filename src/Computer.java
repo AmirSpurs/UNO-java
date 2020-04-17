@@ -7,8 +7,10 @@ public class Computer extends Player {
     {
         for (int i=0;i<getCardsNumber();i++)
         {
-            if (cardAt(i) instanceof WildDrawFourCard && ((WildDrawFourCard) cardAt(i)).canPutOverWild(manager))
-                return (Integer.toString(i+1));
+            if (cardAt(i) instanceof WildDrawFourCard) {
+                if ( ((WildDrawFourCard) cardAt(i)).canPutOverWild(manager))
+                return (Integer.toString(i + 1));
+            }
             else
             if (cardAt(i).canPutOver(manager.getCurrentCard()))
                 return (Integer.toString(i+1));
