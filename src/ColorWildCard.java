@@ -8,9 +8,9 @@ public class ColorWildCard extends Card{
     }
 
     @Override
-    public boolean action(GameManagement manager, Card currentCard)
+    public boolean action(GameManagement manager)
     {
-        if (!canPutOver(currentCard))
+        if (!canPutOver(manager.getCurrentCard()))
             return false;
         askAndSetColor(manager);
         return true;

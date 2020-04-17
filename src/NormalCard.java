@@ -6,8 +6,8 @@ public class NormalCard extends Card {
     }
 
     @Override
-    public boolean action(GameManagement manager,  Card currentCard) {
-        return canPutOver(currentCard);
+    public boolean action(GameManagement manager) {
+        return canPutOver(manager.getCurrentCard());
 
     }
 

@@ -27,7 +27,7 @@ public abstract class Card
         this.number = number;
     }
 
-    public abstract boolean action (GameManagement manager, Card currentCard);
+    public abstract boolean action (GameManagement manager);
     public  void print(int index)
     {
         if (index!=5)

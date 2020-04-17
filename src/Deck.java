@@ -1,17 +1,7 @@
 import java.util.*;
-import java.util.concurrent.LinkedBlockingDeque;
 
 public class Deck {
     private ArrayList<Card> cards;
-    private Card currentCard;
-
-    public void setCurrentCard(Card currentCard) {
-        this.currentCard = currentCard;
-    }
-
-    public Card getCurrentCard() {
-        return currentCard;
-    }
 
     public void addCard (Card cardToAdd)
     {
@@ -36,14 +26,21 @@ public class Deck {
             }
         }
         Collections.shuffle(cards);
+
+
+
+
+    }
+    public Card putFirstCard()
+    {
         Random topCard = new Random();
         int index = 0;
-
         do {
             index = topCard.nextInt(108);
         } while ( cards.get(index) instanceof WildDrawFourCard || cards.get(index) instanceof ColorWildCard); //recheck for sure
-        currentCard = cards.get(index);
+        Card currentCard = cards.get(index);
         cards.remove(index);
+        return currentCard ;
 
     }
     public void giveAwayCard(Player playerToGive)
@@ -69,20 +66,7 @@ public class Deck {
             i++;
         }
     }
-    public void printCurrentCard()
-    {
 
-
-        for (int i = 1;i<=9;i++) {
-            System.out.print("                                           ");
-
-            currentCard.print(i);
-            System.out.println("\u001B[0m     ");
-        }
-
-            System.out.println("\u001B[0m     \n");
-
-    }
 
 }
 

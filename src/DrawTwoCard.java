@@ -5,8 +5,8 @@ public class DrawTwoCard extends Card{
     }
 
     @Override
-    public boolean action(GameManagement manager, Card currentCard) {
-        if (!canPutOver(currentCard))
+    public boolean action(GameManagement manager) {
+        if (!canPutOver(manager.getCurrentCard()))
             return false;
         manager.setDraw2Points(manager.getDraw2Points() + 2);
         return true;

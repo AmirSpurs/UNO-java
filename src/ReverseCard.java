@@ -6,8 +6,8 @@ public class ReverseCard extends Card {
 
 
     @Override
-    public boolean action(GameManagement manager, Card currentCard) {
-        if (!canPutOver(currentCard))
+    public boolean action(GameManagement manager) {
+        if (!canPutOver(manager.getCurrentCard()))
             return false;
         manager.setDirection(-1*manager.getDirection());
         return true;

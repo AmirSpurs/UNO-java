@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class GameManagement {
     private Player [] players ;
     private Player currentPlayer ;
+    private Card currentCard ;
     private int direction;
     private int turn  ;
     private Deck deck;
@@ -22,9 +23,10 @@ public class GameManagement {
 
 
     public void startGame() throws InterruptedException {
+        currentCard = deck.putFirstCard();
         for (Player player:players)
             deck.handOutCard(player);
-        deck.getCurrentCard().action(this,deck.getCurrentCard());
+       currentCard.action(this);
     }
     public void playGame() throws IOException, InterruptedException {
         startGame();
@@ -47,7 +49,7 @@ public class GameManagement {
 //                break;
 
             else {
-                if (!currentPlayer.canPlaceAnyCard(deck.getCurrentCard())) {
+                if (!currentPlayer.canPlaceAnyCard(currentCard)) {
                     System.out.println("Can't place any card!");
                     System.out.println("press any key to draw card from deck");
                     System.in.read();
@@ -56,7 +58,7 @@ public class GameManagement {
                 }
 //                if (endGame())
 //                    break;
-                if (currentPlayer.canPlaceAnyCard(deck.getCurrentCard())) {
+                if (currentPlayer.canPlaceAnyCard(currentCard)) {
                     String userInput;
 
                     do {
@@ -138,16 +140,17 @@ public class GameManagement {
         if (draw4Points>0 && !( playerToPlace.cardAt(cardIndex) instanceof WildDrawFourCard))
             return false;
 
-        if (cardIndex>playerToPlace.getCardsNumber() || ( draw4Points==0 && playerToPlace.CanplayWithoutWildDraw(cardIndex,deck.getCurrentCard()))  ||
-                !(playerToPlace.cardAt(cardIndex).action(this,deck.getCurrentCard()))  )
+
+        if (cardIndex>playerToPlace.getCardsNumber() || ( draw4Points==0 && playerToPlace.CanplayWithoutWildDraw(cardIndex,currentCard))  ||
+                !(playerToPlace.cardAt(cardIndex).action(this))  )
         {
             System.out.println("Invalid Input!");
             Thread.sleep(500);
 
             return false;
         }
-        deck.addCard(deck.getCurrentCard());
-        deck.setCurrentCard(playerToPlace.cardAt(cardIndex));
+        deck.addCard(currentCard);
+        currentCard = ( playerToPlace.cardAt(cardIndex));
         playerToPlace.removeCardAt(cardIndex);
         Thread.sleep(300);
         return true;
@@ -169,11 +172,20 @@ public class GameManagement {
             System.out.println("Anti clockWise");
         else
             System.out.println("ClockWise");
-        deck.printCurrentCard();
+        printCurrentCard();
         System.out.println(currentPlayer.getName() + "'s Turn\n");
         currentPlayer.printAllCards();
 
     }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public Card getCurrentCard() {
+        return currentCard;
+    }
+
     public boolean endGame() {
         for (Player player : players) {
             if (player.getCardsNumber() == 0)
@@ -212,5 +224,19 @@ public class GameManagement {
 
     public void setDraw2Points(int draw2Points) {
         this.draw2Points = draw2Points;
+    }
+    public void printCurrentCard()
+    {
+
+
+        for (int i = 1;i<=9;i++) {
+            System.out.print("                                           ");
+
+            currentCard.print(i);
+            System.out.println("\u001B[0m     ");
+        }
+
+        System.out.println("\u001B[0m     \n");
+
     }
 }
