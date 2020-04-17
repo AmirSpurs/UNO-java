@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class GameManagement {
     private Player [] players ;
+    private Player currentPlayer ;
     private int direction;
     private int turn  ;
     private Deck deck;
@@ -16,6 +17,7 @@ public class GameManagement {
         draw4Points = 0;
         draw2Points = 0;
         turn = -1;
+        currentPlayer = null;
     }
 
 
@@ -28,7 +30,7 @@ public class GameManagement {
         startGame();
         Scanner input = new Scanner(System.in);
         while (!endGame()) {
-            turn = nextPlayer();
+            nextPlayer();
             showGameInfo();
 
             if (draw2Points > 0) {
@@ -45,23 +47,23 @@ public class GameManagement {
 //                break;
 
             else {
-                if (!players[turn].canPlaceAnyCard(deck.getCurrentCard())) {
+                if (!currentPlayer.canPlaceAnyCard(deck.getCurrentCard())) {
                     System.out.println("Can't place any card!");
                     System.out.println("press any key to draw card from deck");
                     System.in.read();
                     Thread.sleep(700);
-                    deck.giveAwayCard(players[turn]);
+                    deck.giveAwayCard(currentPlayer);
                 }
 //                if (endGame())
 //                    break;
-                if (players[turn].canPlaceAnyCard(deck.getCurrentCard())) {
+                if (currentPlayer.canPlaceAnyCard(deck.getCurrentCard())) {
                     String userInput;
 
                     do {
                         showGameInfo();
                         System.out.println("choose one of your cards");
                         userInput = input.next();
-                    } while (( !endGame()) && !placeCard(players[turn], userInput));
+                    } while (( !endGame()) && !placeCard(currentPlayer, userInput));
 //                    if (endGame())
 //                        break;
                 }
@@ -73,13 +75,13 @@ public class GameManagement {
 
 
     public void manageDrawTwoCards() throws IOException, InterruptedException {
-        if (players[turn].hasDrawTwo())
+        if (currentPlayer.hasDrawTwo())
         {
             Scanner input = new Scanner(System.in);
             String userInput;
             System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw2Points+" Cards");
             userInput = input.next();
-            if (!placeCard(players[turn],userInput))
+            if (!placeCard(currentPlayer,userInput))
             {
                 penalty(draw2Points);
                 draw2Points = 0;
@@ -93,13 +95,13 @@ public class GameManagement {
     }
     public void manageWildDrawFourCard() throws IOException, InterruptedException {
 
-        if (players[turn].hasWildDrewFour())
+        if (currentPlayer.hasWildDrewFour())
         {
             Scanner input = new Scanner(System.in);
             String userInput;
             System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw4Points+" Cards");
             userInput = input.next();
-            if (!placeCard(players[turn],userInput))
+            if (!placeCard(currentPlayer,userInput))
             {
                 penalty(draw4Points);
                 draw4Points = 0;
@@ -116,7 +118,7 @@ public class GameManagement {
         System.out.println("You should pick up "+drawPoints+" cards\nPress Any Key To Continue");
         System.in.read();
         for (int i=1;i<=drawPoints;i++)
-            deck.giveAwayCard(players[turn]);
+            deck.giveAwayCard(currentPlayer);
         showGameInfo();
         Thread.sleep(600);
     }
@@ -150,11 +152,12 @@ public class GameManagement {
         Thread.sleep(300);
         return true;
     }
-    public int nextPlayer()
+    public void nextPlayer()
     {
         if (turn+direction<0)
             turn = players.length;
-        return ((turn+direction) % players.length);
+        turn = (turn+direction) % players.length ;
+        currentPlayer = players[turn];
     }
 
     public void showGameInfo()
@@ -167,8 +170,8 @@ public class GameManagement {
         else
             System.out.println("ClockWise");
         deck.printCurrentCard();
-        System.out.println(players[turn].getName() + "'s Turn\n");
-        players[turn].printAllCards();
+        System.out.println(currentPlayer.getName() + "'s Turn\n");
+        currentPlayer.printAllCards();
 
     }
     public boolean endGame() {

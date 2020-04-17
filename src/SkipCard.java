@@ -8,7 +8,7 @@ public class SkipCard extends Card {
   public boolean action(GameManagement manager, Card currentCard)  {
       if (!canPutOver(currentCard))
           return false;
-      manager.setTurn(manager.nextPlayer());
+      manager.nextPlayer();
       System.out.println("Next player misses a turn!");
       return  true;
   }
