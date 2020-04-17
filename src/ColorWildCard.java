@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class ColorWildCard extends Card{
@@ -23,30 +24,30 @@ public class ColorWildCard extends Card{
 
     }
 
-    public void askAndSetColor(GameManagement manager)
-    {
-        Scanner input = new Scanner(System.in);
-        int colorNo ;
+    public void askAndSetColor(GameManagement manager) {
+        int colorNo;
+        if (manager.getCurrentPlayer() instanceof Computer) {
+            Random randColor = new Random();
+            colorNo = randColor.nextInt(4) + 1;
+        } else {
+            Scanner input = new Scanner(System.in);
 
-        while (true)
-        {
-            System.out.println("choose one of color\n1)Red\n2)Green\n3)Yellow\n4)Blue");
-            String userInput = input.next();
-            try {
-                colorNo = Integer.parseInt(userInput);
-               if (colorNo>0 && colorNo<5)
-                   break;
-            }
-            catch (NumberFormatException e)
-            {
-                System.out.println("Invalid Input!");
-                manager.showGameInfo();
+            while (true) {
+                System.out.println("choose one of color\n1)Red\n2)Green\n3)Yellow\n4)Blue");
+                String userInput = input.next();
+                try {
+                    colorNo = Integer.parseInt(userInput);
+                    if (colorNo > 0 && colorNo < 5)
+                        break;
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid Input!");
+                    manager.showGameInfo();
+                }
             }
         }
         this.setColor(colorNo);
+
     }
-
-
     @Override
     public boolean canPutOver(Card currentCard) {
         return  true ;

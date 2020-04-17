@@ -36,9 +36,7 @@ public class GameManagement {
             showGameInfo();
 
             if (draw2Points > 0) {
-
                 manageDrawTwoCards();
-
             }
             else if (draw4Points > 0)
             {
@@ -52,7 +50,10 @@ public class GameManagement {
                 if (!currentPlayer.canPlaceAnyCard(currentCard)) {
                     System.out.println("Can't place any card!");
                     System.out.println("press any key to draw card from deck");
-                    System.in.read();
+                    if (currentPlayer instanceof Computer)
+                        Thread.sleep(700);
+                    else
+                     System.in.read();
                     Thread.sleep(700);
                     deck.giveAwayCard(currentPlayer);
                 }
@@ -63,7 +64,11 @@ public class GameManagement {
 
                     do {
                         showGameInfo();
+                        //here we should create method
                         System.out.println("choose one of your cards");
+                        if (currentPlayer instanceof Computer)
+                            userInput = ((Computer) currentPlayer).chooseCard(currentCard);
+                        else
                         userInput = input.next();
                     } while (( !endGame()) && !placeCard(currentPlayer, userInput));
 //                    if (endGame())
@@ -82,7 +87,10 @@ public class GameManagement {
             Scanner input = new Scanner(System.in);
             String userInput;
             System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw2Points+" Cards");
-            userInput = input.next();
+            if (currentPlayer instanceof Computer)
+                userInput = ((Computer) currentPlayer).chooseDrawCard(false);
+            else
+                userInput = input.next();
             if (!placeCard(currentPlayer,userInput))
             {
                 penalty(draw2Points);
@@ -102,7 +110,10 @@ public class GameManagement {
             Scanner input = new Scanner(System.in);
             String userInput;
             System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw4Points+" Cards");
-            userInput = input.next();
+            if (currentPlayer instanceof Computer)
+                userInput = ((Computer) currentPlayer).chooseDrawCard(true);
+            else
+             userInput = input.next();
             if (!placeCard(currentPlayer,userInput))
             {
                 penalty(draw4Points);
@@ -118,7 +129,10 @@ public class GameManagement {
     }
     public void penalty (int drawPoints) throws IOException, InterruptedException {
         System.out.println("You should pick up "+drawPoints+" cards\nPress Any Key To Continue");
-        System.in.read();
+        if (currentPlayer instanceof Computer)
+            Thread.sleep(700);
+        else
+            System.in.read();
         for (int i=1;i<=drawPoints;i++)
             deck.giveAwayCard(currentPlayer);
         showGameInfo();
