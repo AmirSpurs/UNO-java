@@ -141,12 +141,10 @@ public class GameManagement {
             return false;
 
 
-        if (cardIndex>playerToPlace.getCardsNumber() || ( draw4Points==0 && playerToPlace.CanplayWithoutWildDraw(cardIndex,currentCard))  ||
-                !(playerToPlace.cardAt(cardIndex).action(this))  )
+        if (cardIndex>playerToPlace.getCardsNumber()  || !(playerToPlace.cardAt(cardIndex).action(this))  )
         {
             System.out.println("Invalid Input!");
             Thread.sleep(500);
-
             return false;
         }
         deck.addCard(currentCard);

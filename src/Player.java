@@ -14,9 +14,9 @@ public class Player {
     {
         return cards.get(index);
     }
-//    public ArrayList<Card> getCards() {
-//        return cards;
-//    }
+    public ArrayList<Card> getCards() {
+        return cards;
+    }
 
     public void removeCardAt (int index)
     {
@@ -99,22 +99,6 @@ public class Player {
         }
         return false ;
     }
-    public boolean CanplayWithoutWildDraw(int index,Card currentCard)
-    {
-
-        if (!(cards.get(index) instanceof WildDrawFourCard))
-            return false;
-        {
-            for (Card card: cards) {
-
-                if (!(card instanceof WildDrawFourCard) && card.canPutOver(currentCard))
-                    return true;
-            }
-        }
-        return false;
-    }
-
-
 
     public void addCard (Card cardToAdd)
     {

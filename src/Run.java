@@ -8,9 +8,8 @@ public class Run {
         Player player1 = new Player("ali");
         Player player2 = new Player("amir");
         Player player3 = new Player("mammad");
-//        player1.addCard(new WildDrawFourCard(0,50));
-//        player2.addCard(new WildDrawFourCard(0,50));
-//        player3.addCard(new WildDrawFourCard(0,50));
+//    5
+
 
         Player [] players = new Player[3];
         players[0] = player1;

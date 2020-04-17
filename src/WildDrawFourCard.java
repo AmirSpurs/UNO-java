@@ -7,16 +7,23 @@ public class WildDrawFourCard extends ColorWildCard {
     @Override
     public boolean action(GameManagement manager)
     {
-        if (!canPutOver(manager.getCurrentCard()))
+        if (!canPutOverWild(manager))
             return false;
         askAndSetColor(manager);
         manager.setDraw4Points(manager.getDraw4Points() + 4);
 
         return true;
     }
-    public void canPutOverWild()
+    public boolean canPutOverWild(GameManagement management)
     {
-        
+            if (management.getDraw4Points()>0)
+                return true ;
+            for (Card card: management.getCurrentPlayer().getCards()) {
+
+                if (!(card instanceof WildDrawFourCard) && card.canPutOver(management.getCurrentCard()))
+                    return false;
+            }
+        return true;
     }
     @Override
     public void specificPrint() {
