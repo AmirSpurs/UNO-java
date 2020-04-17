@@ -3,10 +3,14 @@ public class Computer extends Player {
         super(name);
     }
 
-    public String chooseCard(Card currentCard)
+    public String chooseCard(GameManagement manager)
     {
-        for (int i=0;i<getCardsNumber();i++) {
-            if (cardAt(i).canPutOver(currentCard))
+        for (int i=0;i<getCardsNumber();i++)
+        {
+            if (cardAt(i) instanceof WildDrawFourCard && ((WildDrawFourCard) cardAt(i)).canPutOverWild(manager))
+                return (Integer.toString(i+1));
+            else
+            if (cardAt(i).canPutOver(manager.getCurrentCard()))
                 return (Integer.toString(i+1));
         }
             return null;

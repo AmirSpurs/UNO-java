@@ -66,8 +66,10 @@ public class GameManagement {
                         showGameInfo();
                         //here we should create method
                         System.out.println("choose one of your cards");
-                        if (currentPlayer instanceof Computer)
-                            userInput = ((Computer) currentPlayer).chooseCard(currentCard);
+                        if (currentPlayer instanceof Computer) {
+                            userInput = ((Computer) currentPlayer).chooseCard(this);
+                            Thread.sleep(1300);
+                        }
                         else
                         userInput = input.next();
                     } while (( !endGame()) && !placeCard(currentPlayer, userInput));
@@ -87,8 +89,10 @@ public class GameManagement {
             Scanner input = new Scanner(System.in);
             String userInput;
             System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw2Points+" Cards");
-            if (currentPlayer instanceof Computer)
+            if (currentPlayer instanceof Computer) {
                 userInput = ((Computer) currentPlayer).chooseDrawCard(false);
+                Thread.sleep(1300);
+            }
             else
                 userInput = input.next();
             if (!placeCard(currentPlayer,userInput))
@@ -110,8 +114,10 @@ public class GameManagement {
             Scanner input = new Scanner(System.in);
             String userInput;
             System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw4Points+" Cards");
-            if (currentPlayer instanceof Computer)
+            if (currentPlayer instanceof Computer) {
                 userInput = ((Computer) currentPlayer).chooseDrawCard(true);
+                Thread.sleep(1300);
+            }
             else
              userInput = input.next();
             if (!placeCard(currentPlayer,userInput))
