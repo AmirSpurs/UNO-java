@@ -4,10 +4,12 @@ import java.util.ArrayList;
 public class Run {
     public static void main(String[] args) throws IOException, InterruptedException {
 
+        System.out.print("\033[H\033[2J");
+
         Deck deck = new Deck();
         Player player1 = new Player("ali");
-        Player player2 = new Computer("amir");
-        Player player3 = new Computer("mammad");
+        Player player2 = new Player("amir");
+        Player player3 = new Player("mammad");
         Player [] players = new Player[3];
         players[0] = player1;
         players[1] = player2;

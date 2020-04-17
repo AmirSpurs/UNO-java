@@ -1,5 +1,7 @@
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class GameManagement {
     private Player [] players ;
@@ -26,6 +28,9 @@ public class GameManagement {
         currentCard = deck.putFirstCard();
         for (Player player:players)
             deck.handOutCard(player);
+        System.out.print("\033[H\033[2J");
+        currentCard.printWholeCard();
+        Thread.sleep(500);
        currentCard.action(this);
     }
     public void playGame() throws IOException, InterruptedException {
@@ -45,15 +50,17 @@ public class GameManagement {
                 if (!currentPlayer.canPlaceAnyCard(currentCard)) {
                     System.out.println("Can't place any card!");
                     if (currentPlayer instanceof Computer)
-                        Thread.sleep(100);
+                        Thread.sleep(1000);
                     else
                     {
                         System.out.println("press any key to draw card from deck");
                         System.in.read();
                     }
-                    Thread.sleep(1000);
+                    System.out.println("Card Picked up");
+                    Thread.sleep(800);
                     deck.giveAwayCard(currentPlayer);
-                    Thread.sleep(1000);
+                    showGameInfo();
+                    Thread.sleep(800);
                 }
                 if (currentPlayer.canPlaceAnyCard(currentCard)) {
                     String userInput;
@@ -73,8 +80,6 @@ public class GameManagement {
 
                 }
             }
-            showGameInfo();
-
         }
 
         }
@@ -85,7 +90,7 @@ public class GameManagement {
         {
             Scanner input = new Scanner(System.in);
             String userInput;
-            System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw2Points+" Cards");
+            System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw2Points+" cards");
             if (currentPlayer instanceof Computer) {
                 userInput = ((Computer) currentPlayer).chooseDrawCard(false);
                 Thread.sleep(1600);
@@ -110,7 +115,7 @@ public class GameManagement {
         {
             Scanner input = new Scanner(System.in);
             String userInput;
-            System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw4Points+" Cards");
+            System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw4Points+" cards");
             if (currentPlayer instanceof Computer) {
                 userInput = ((Computer) currentPlayer).chooseDrawCard(true);
                 Thread.sleep(1700);
@@ -131,7 +136,7 @@ public class GameManagement {
 
     }
     public void penalty (int drawPoints) throws IOException, InterruptedException {
-        System.out.println(currentPlayer.getName()+" should pick up "+drawPoints+" cards!)");
+        System.out.println(currentPlayer.getName()+" should pick up "+drawPoints+" cards!");
         if (currentPlayer instanceof Computer)
             Thread.sleep(1400);
         else
@@ -143,7 +148,7 @@ public class GameManagement {
         for (int i=1;i<=drawPoints;i++)
             deck.giveAwayCard(currentPlayer);
         showGameInfo();
-        Thread.sleep(600);
+        Thread.sleep(800);
     }
     public boolean placeCard(Player playerToPlace,String userInput) throws InterruptedException {
         int cardIndex ;
@@ -162,7 +167,7 @@ public class GameManagement {
             return false;
 
 
-        if (cardIndex>playerToPlace.getCardsNumber()  || !(playerToPlace.cardAt(cardIndex).action(this))  )
+        if (cardIndex>=playerToPlace.getCardsNumber()  || !(playerToPlace.cardAt(cardIndex).action(this))  )
         {
             System.out.println("Invalid Input!");
             Thread.sleep(500);
@@ -192,7 +197,7 @@ public class GameManagement {
             System.out.println("Anti clockWise");
         else
             System.out.println("ClockWise");
-        printCurrentCard();
+        currentCard.printWholeCard();
         System.out.println(currentPlayer.getName() + "'s Turn\n");
         if (!(currentPlayer instanceof Computer))
         currentPlayer.printAllCards();
@@ -207,10 +212,14 @@ public class GameManagement {
         return currentCard;
     }
 
-    public boolean endGame() {
+    public boolean endGame() throws InterruptedException {
         for (Player player : players) {
-            if (player.getCardsNumber() == 0)
+            if (player.getCardsNumber() == 0) {
+                System.out.println(player.getName() + " Is The Winner !");
+                Thread.sleep(1000);
+                ranking();
                 return true;
+            }
         }
         return false;
 
@@ -246,18 +255,28 @@ public class GameManagement {
     public void setDraw2Points(int draw2Points) {
         this.draw2Points = draw2Points;
     }
-    public void printCurrentCard()
+
+    public void ranking()
     {
-
-
-        for (int i = 1;i<=9;i++) {
-            System.out.print("                                           ");
-
-            currentCard.print(i);
-            System.out.println("\u001B[0m     ");
+        System.out.print("\033[H\033[2J");
+        sort();
+        int i =0;
+        for (Player player : players)
+        {
+            i++;
+            System.out.println("                   "+i+") "+player.getName()+" : "+player.getCardsNumber());
         }
 
-        System.out.println("\u001B[0m     \n");
-
+    }
+    private void sort()
+    {
+        for (int i=0;i<players.length;i++)
+            for (int j=0;j<players.length-1;j++)
+                if (players[j].getCardsNumber()>players[j+1].getCardsNumber())
+                {
+                    Player temp = players[j];
+                    players[j]=players[j+1];
+                    players[j+1] = temp;
+                }
     }
 }

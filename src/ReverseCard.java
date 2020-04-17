@@ -10,8 +10,11 @@ public class ReverseCard extends Card {
         if (!canPutOver(manager.getCurrentCard()))
             return false;
         manager.setDirection(-1*manager.getDirection());
+        manager.showGameInfo();
+        printWholeCard();
+        Thread.sleep(800);
         System.out.println("Direction Reversed!");
-        Thread.sleep(700);
+        Thread.sleep(1000);
         return true;
     }
 

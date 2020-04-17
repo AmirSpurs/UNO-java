@@ -38,6 +38,19 @@ public abstract class Card
 
 
     }
+    public void printWholeCard()
+    {
+
+        for (int i = 1;i<=9;i++) {
+            System.out.print("                                           ");
+
+            print(i);
+            System.out.println("\u001B[0m     ");
+        }
+
+        System.out.println("\u001B[0m     \n");
+
+    }
     public abstract void specificPrint();
     public abstract boolean canPutOver(Card currentCard);
 
