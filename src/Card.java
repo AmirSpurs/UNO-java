@@ -51,6 +51,10 @@ public abstract class Card
         System.out.println("\u001B[0m     \n");
 
     }
+    public void cardPuttedMessage() throws InterruptedException {
+        System.out.println("Card Putted!");
+        Thread.sleep(600);
+    }
     public abstract void specificPrint();
     public abstract boolean canPutOver(Card currentCard);
 

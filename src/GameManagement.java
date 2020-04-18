@@ -90,7 +90,7 @@ public class GameManagement {
         {
             Scanner input = new Scanner(System.in);
             String userInput;
-            System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw2Points+" cards");
+            System.out.println(currentPlayer.getName()+" you Can choose one of your draw cards enter Any other Key to pick up "+draw2Points+" cards");
             if (currentPlayer instanceof Computer) {
                 userInput = ((Computer) currentPlayer).chooseDrawCard(false);
                 Thread.sleep(1600);
@@ -115,7 +115,7 @@ public class GameManagement {
         {
             Scanner input = new Scanner(System.in);
             String userInput;
-            System.out.println("You Can choose one of your draw cards enter Any other Key to pick up "+draw4Points+" cards");
+            System.out.println(currentPlayer.getName()+" you Can choose one of your draw cards enter Any other Key to pick up "+draw4Points+" cards");
             if (currentPlayer instanceof Computer) {
                 userInput = ((Computer) currentPlayer).chooseDrawCard(true);
                 Thread.sleep(1700);
@@ -177,7 +177,11 @@ public class GameManagement {
         currentCard = ( playerToPlace.cardAt(cardIndex));
         playerToPlace.removeCardAt(cardIndex);
         showGameInfo();
-        Thread.sleep(1000);
+        //System.out.print("\033[H\033[2J");
+        //currentCard.printWholeCard();
+        currentCard.cardPuttedMessage();
+        if (playerToPlace instanceof Computer)
+            Thread.sleep(1000);
         return true;
     }
     public void nextPlayer()
@@ -264,7 +268,7 @@ public class GameManagement {
         for (Player player : players)
         {
             i++;
-            System.out.println("                   "+i+") "+player.getName()+" : "+player.getCardsNumber());
+            System.out.println("                   "+i+") "+player.getName()+" : "+player.totalPoints()+" points");
         }
 
     }
@@ -272,7 +276,8 @@ public class GameManagement {
     {
         for (int i=0;i<players.length;i++)
             for (int j=0;j<players.length-1;j++)
-                if (players[j].getCardsNumber()>players[j+1].getCardsNumber())
+                if (players[j].totalPoints() > players[j+1].totalPoints() ||
+                        ( players[j].totalPoints() == players[j+1].totalPoints() && players[j].getCardsNumber() > players[j+1].getCardsNumber() ))
                 {
                     Player temp = players[j];
                     players[j]=players[j+1];

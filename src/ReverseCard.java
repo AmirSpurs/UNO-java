@@ -10,14 +10,16 @@ public class ReverseCard extends Card {
         if (!canPutOver(manager.getCurrentCard()))
             return false;
         manager.setDirection(-1*manager.getDirection());
-        manager.showGameInfo();
-        printWholeCard();
-        Thread.sleep(800);
         System.out.println("Direction Reversed!");
-        Thread.sleep(1000);
         return true;
     }
+    @Override
+    public void cardPuttedMessage() throws InterruptedException {
+        System.out.println("Card Putted!");
+        System.out.println("Direction Reversed!");
+        Thread.sleep(600);
 
+    }
     @Override
     public void specificPrint() {
         System.out.print("\u001B[4"+getColor()+"m"+"\u001B[97m" +"    Reverse    ");

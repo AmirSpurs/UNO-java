@@ -9,13 +9,15 @@ public class SkipCard extends Card {
       if (!canPutOver(manager.getCurrentCard()))
           return false;
       manager.nextPlayer();
-      manager.showGameInfo();
-      printWholeCard();
-      Thread.sleep(800);
-      System.out.println("Next player misses a turn!");
-      Thread.sleep(1000);
       return  true;
   }
+
+    @Override
+    public void cardPuttedMessage() throws InterruptedException {
+        System.out.println("Card Putted!");
+        System.out.println("Next player misses a turn!");
+        Thread.sleep(600);
+    }
 
     @Override
     public void specificPrint() {

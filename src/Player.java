@@ -106,4 +106,12 @@ public class Player {
             cardToAdd.setColor(0);
         cards.add(cardToAdd);
     }
+    public int totalPoints()
+    {
+        int sum = 0;
+        for (Card card:cards)
+                sum+=card.getNumber();
+        return sum;
+
+    }
 }
