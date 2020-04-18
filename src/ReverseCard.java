@@ -1,5 +1,19 @@
+/**
+ * The ReverseCard class is a subclass of Card that implements a type of card in Uno game
+ * when a user put this card the direction of the game will be reversed (E.g. clockwise to anti clockwise)
+ * the score of this card is 20 points
+ *
+ * @author Amirreza Hashemi
+ * @version 1.0
+ * @since 4/14/2020
+ */
 public class ReverseCard extends Card {
 
+    /**
+     * Instantiates a new Reverse card.
+     * @param color  the color of card
+     * @param number the number/score of card (20)
+     */
     protected ReverseCard(int color, int number) {
         super(color, number);
     }
