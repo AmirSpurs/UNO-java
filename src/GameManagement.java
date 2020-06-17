@@ -214,7 +214,19 @@ public class GameManagement {
         else
             System.out.println("ClockWise");
         currentCard.printWholeCard();
+        int i =0 ;
+        Player playerToPrint = null;
+        for (Player player:players) {
+            if (!(player instanceof Computer))
+            {
+                playerToPrint = player;
+                i++;
+            }
+        }
+        if (i==1 && playerToPrint!=currentPlayer)
+            playerToPrint.printAllCards();
         System.out.println(currentPlayer.getName() + "'s Turn\n");
+
         if (!(currentPlayer instanceof Computer))
             currentPlayer.printAllCards();
 
